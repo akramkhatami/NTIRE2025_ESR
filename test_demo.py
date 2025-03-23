@@ -16,16 +16,16 @@ def select_model(args, device):
     # Model ID is assigned according to the order of the submissions.
     # Different networks are trained with input range of either [0,1] or [0,255]. The range is determined manually.
     model_id = args.model_id
-    if model_id == 0:
+    if model_id == 41:
         # Baseline: The 1st Place of the `Overall Performance`` of the NTIRE 2023 Efficient SR Challenge 
         # Edge-enhanced Feature Distillation Network for Efficient Super-Resolution
         # arXiv: https://arxiv.org/pdf/2204.08759
         # Original Code: https://github.com/icandle/EFDN
         # Ckpts: EFDN_gv.pth
-        from models.team00_EFDN import EFDN
+        from models.team41_DepthIBN import IBMDN
         name, data_range = f"{model_id:02}_EFDN_baseline", 1.0
-        model_path = os.path.join('model_zoo', 'team00_EFDN.pth')
-        model = EFDN()
+        model_path = os.path.join('model_zoo', 'team41_DepthIBN.pth')
+        model = IBMDN()
         model.load_state_dict(torch.load(model_path), strict=True)
     elif model_id == 1:
         pass # ---- Put your model here as below ---
