@@ -380,6 +380,7 @@ class RFDB1(nn.Module):
         out_fused =  sim_att
 
         return out_fused
+        
 class RFDB2(nn.Module):
     def __init__(self, in_channels, distillation_rate=0.25):
         super(RFDB2, self).__init__()
@@ -458,6 +459,7 @@ class RFDB3(nn.Module):
 
         out = torch.cat([distilled_c1, distilled_c2, distilled_c3, r_c4], dim=1)
         sim_att = self.cca(self.c5(out))
+        out_fused =  sim_att
         return out_fused
 
 
@@ -502,12 +504,11 @@ class RFDB4(nn.Module):
 
             return out_fused
 
-    def pixelshuffle_block(in_channels, out_channels, upscale_factor=2, kernel_size=3, stride=1):
-        conv = conv_layer(in_channels, out_channels * (upscale_factor ** 2), kernel_size, stride)
-        pixel_shuffle = nn.PixelShuffle(upscale_factor)
-        return sequential(conv, pixel_shuffle)
 
-
+def pixelshuffle_block(in_channels, out_channels, upscale_factor=2, kernel_size=3, stride=1):
+    conv = conv_layer(in_channels, out_channels * (upscale_factor ** 2), kernel_size, stride)
+    pixel_shuffle = nn.PixelShuffle(upscale_factor)
+    return sequential(conv, pixel_shuffle)
 
 
 
